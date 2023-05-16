@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import {SafeAreaView, StyleSheet, TextInput} from 'react-native';
-import {Button,View,Text,Alert,} from 'react-native';
+import {Button,View,Text,Alert} from 'react-native';
 
+import styles from './welcome.style'
 
 const TextInputExample = () => {
   const [text, onChangeText] = React.useState('Codigo');

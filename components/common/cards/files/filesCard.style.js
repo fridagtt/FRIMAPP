@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginHorizontal: SIZES.medium,
   },
-  jobName: {
+  fileName: {
     fontSize: SIZES.medium,
     fontFamily: "DMBold",
     color: COLORS.primary,
