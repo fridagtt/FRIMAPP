@@ -4,18 +4,41 @@ import {
   Text,
   TextInput,
   SafeAreaView,
-  ScrollView,
+  StyleSheet,
   ActivityIndicator,
-  RefreshControl,
 } from "react-native";
 import {useIsFocused} from '@react-navigation/native';
 import welcomeStyles from "../../components/home/welcome/welcome.style";
 
 import { Stack, useRouter, useSearchParams } from "expo-router";
-import { JobFooter, ScreenHeaderBtn } from "../../components";
+import { ScreenHeaderBtn } from "../../components";
 import { COLORS, icons, SIZES } from "../../constants";
-import useFetch from "../../hook/useFetch";
 import axios from 'axios';
+
+const styles = StyleSheet.create({
+  center: {
+    alignItems: 'center',
+  },
+  button: {
+    width: '65%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginBottom: '10%',
+    marginTop: '5%',
+    backgroundColor: '#0a4daa',
+    borderRadius: 100,
+    height: 40,
+  },
+  container: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  button: {
+    margin: 10,
+    width: 100,
+  },
+});
 
 const FileDetails = () => {
   const params = useSearchParams();
@@ -40,10 +63,6 @@ const FileDetails = () => {
     fetchData();
   }, [isFocused]);
 
-  const [refreshing, setRefreshing] = useState(false);
-
-  const onRefresh = () => {}
-
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite, height: '100%' }}>
       <Stack.Screen
@@ -61,8 +80,15 @@ const FileDetails = () => {
           headerTitle: "",
         }}
       />
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={{ padding: SIZES.medium, paddingBottom: 100, height: '100%' }}>
+          <View
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              alignContent: 'center',
+              width: '100%',
+              height: '100%',
+            }}
+          >
             {isLoading ? (
               <ActivityIndicator size='large' color={COLORS.primary} />
             ) : error ? (
@@ -73,6 +99,9 @@ const FileDetails = () => {
                 <View style={welcomeStyles.codingContainer}>
                   <View style={welcomeStyles.writeWrapper}>
                     <TextInput
+                      selectTextOnFocus={true}
+                      multiline={true}
+                      numberOfLines={150}
                       style={welcomeStyles.searchInput}
                       onChangeText={setData}
                       placeholder="Escribe aquí tu código"
@@ -83,7 +112,6 @@ const FileDetails = () => {
               </>
             )}
           </View>
-        </ScrollView>
     </SafeAreaView>
   );
 };

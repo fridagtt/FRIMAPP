@@ -9,9 +9,8 @@ import {
   RefreshControl,
 } from "react-native";
 import { Stack, useRouter, useSearchParams } from "expo-router";
-import { JobFooter, ScreenHeaderBtn } from "../../components";
+import { ScreenHeaderBtn } from "../../components";
 import { COLORS, icons, SIZES } from "../../constants";
-import useFetch from "../../hook/useFetch";
 import welcomeStyles from "../../components/home/welcome/welcome.style";
 
 const FileName = () => {
@@ -23,9 +22,6 @@ const FileName = () => {
   /*const { data, isLoading, error, refetch } = useFetch("file-details", {
     file_id: params.id,
   });*/
-
-  const [refreshing, setRefreshing] = useState(false);
-  const onRefresh = () => {}
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>

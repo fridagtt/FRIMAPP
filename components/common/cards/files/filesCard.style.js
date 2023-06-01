@@ -1,5 +1,4 @@
 import { StyleSheet } from "react-native";
-
 import { COLORS, SHADOWS, SIZES } from "../../../../constants";
 
 const styles = StyleSheet.create({
@@ -22,7 +21,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  logImage: {
+  logoImage: {
     width: "70%",
     height: "70%",
   },
@@ -34,13 +33,6 @@ const styles = StyleSheet.create({
     fontSize: SIZES.medium,
     fontFamily: "DMBold",
     color: COLORS.primary,
-  },
-  jobType: {
-    fontSize: SIZES.small + 2,
-    fontFamily: "DMRegular",
-    color: COLORS.gray,
-    marginTop: 3,
-    textTransform: "capitalize",
   },
 });
 
