@@ -2,12 +2,14 @@ import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
+  TextInput,
   SafeAreaView,
   ScrollView,
   ActivityIndicator,
   RefreshControl,
 } from "react-native";
 import {useIsFocused} from '@react-navigation/native';
+import welcomeStyles from "../../components/home/welcome/welcome.style";
 
 import { Stack, useRouter, useSearchParams } from "expo-router";
 import { JobFooter, ScreenHeaderBtn } from "../../components";
@@ -18,7 +20,7 @@ import axios from 'axios';
 const FileDetails = () => {
   const params = useSearchParams();
   const router = useRouter();
-  const [data, setData] = useState([]);
+  const [data, setData] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
   const isFocused = useIsFocused();
@@ -43,7 +45,7 @@ const FileDetails = () => {
   const onRefresh = () => {}
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite, height: '100%' }}>
       <Stack.Screen
         options={{
           headerStyle: { backgroundColor: COLORS.lightWhite },
@@ -59,36 +61,29 @@ const FileDetails = () => {
           headerTitle: "",
         }}
       />
-
-      <>
-        <ScrollView showsVerticalScrollIndicator={false}
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
-        >
-          {/*{isLoading ? (
-            <ActivityIndicator size='large' color={COLORS.primary} />
-          ) : error ? (
-            <Text>Something went wrong</Text>
-          ) : data.length === 0 ? (
-            <Text>No data available</Text>
-          ) : (
-            <View style={{ padding: SIZES.medium, paddingBottom: 100 }}>
-              <Text>VISTA FILE {params.id}</Text>
-            </View>
-          )}*/}
-            <View style={{ padding: SIZES.medium, paddingBottom: 100 }}>
-              {isLoading ? (
-                <ActivityIndicator size='large' color={COLORS.primary} />
-              ) : error ? (
-                <Text>Something went wrong</Text>
-              ) : (
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <View style={{ padding: SIZES.medium, paddingBottom: 100, height: '100%' }}>
+            {isLoading ? (
+              <ActivityIndicator size='large' color={COLORS.primary} />
+            ) : error ? (
+              <Text>Something went wrong</Text>
+            ) : (
+              <>
                 <Text>{params.id}</Text>
-              )}
-            </View>
+                <View style={welcomeStyles.codingContainer}>
+                  <View style={welcomeStyles.writeWrapper}>
+                    <TextInput
+                      style={welcomeStyles.searchInput}
+                      onChangeText={setData}
+                      placeholder="Escribe aquí tu código"
+                      value={data}
+                    />
+                  </View>
+                </View>
+              </>
+            )}
+          </View>
         </ScrollView>
-
-        <JobFooter url='https://careers.google.com/jobs/results/' />
-      </>
     </SafeAreaView>
   );
 };
