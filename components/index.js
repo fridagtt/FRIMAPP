@@ -2,7 +2,7 @@ import ScreenHeaderBtn from "./common/header/ScreenHeaderBtn";
 
 // home screen
 import Welcome from "./home/welcome/Welcome";
-import FrimaFiles from "./home/frima/FrimaFiles";
+import FilesSection from "./home/filesSection/FilesSection";
 
 // job details screen
 import Company from "./jobdetails/company/Company";
@@ -17,7 +17,7 @@ import FilesCard from "./common/cards/files/FilesCard";
 export {
   ScreenHeaderBtn,
   Welcome,
-  FrimaFiles,
+  FilesSection,
   Company,
   JobTabs,
   JobAbout,

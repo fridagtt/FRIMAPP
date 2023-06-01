@@ -4,7 +4,7 @@ import { Stack, useRouter } from 'expo-router';
 
 import { COLORS, icons, images, SIZES } from '../constants';
 import {
-  FrimaFiles,
+  FilesSection,
   ScreenHeaderBtn,
   Welcome,
 } from "../components";
@@ -18,12 +18,6 @@ const Home = () => {
         options={{
           headerStyle: { backgroundColor: COLORS.lightWhite },
           headerShadowVisible: false,
-          headerLeft: () => (
-            <ScreenHeaderBtn iconUrl={icons.menu} dimension='60%' />
-          ),
-          headerRight: () => (
-            <ScreenHeaderBtn iconUrl={images.profile} dimension='100%' />
-          ),
           headerTitle: "",
         }}
       />
@@ -35,7 +29,7 @@ const Home = () => {
           }}
         >
           <Welcome/>
-          <FrimaFiles />
+          <FilesSection />
         </View>
       </ScrollView>
     </SafeAreaView>

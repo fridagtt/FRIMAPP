@@ -1,8 +1,10 @@
-import React from "react";
+import React, {useState, useEffect} from 'react';
 import { useRouter } from "expo-router";
 import { View, Text, TouchableOpacity, ActivityIndicator, Image } from "react-native";
+import {useIsFocused} from '@react-navigation/native';
+import axios from 'axios';
 
-import styles from "./frimaFiles.style";
+import styles from "./filesSection.style";
 import welcomeStyles from "../welcome/welcome.style";
 
 import { COLORS } from "../../../constants";
@@ -10,10 +12,27 @@ import FilesCard from "../../common/cards/files/FilesCard";
 import useFetch from "../../../hook/useFetch";
 import { icons } from "../../../constants";
 
-const FrimaFiles = () => {
+const FilesSection = () => {
   const router = useRouter();
-  const isLoading = false;
-  const error = false;
+  const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    async function fetchData() {
+      await axios('http://127.0.0.1:5000/files')
+        .then((res) => {
+          setData(res.data.files);
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          setError(true);
+          console.log(error);
+        });
+    }
+    fetchData();
+  }, [isFocused]);
 
   return (
     <View style={styles.container}>
@@ -22,7 +41,7 @@ const FrimaFiles = () => {
           <Text style={styles.headerTitle}>Archivos</Text>
         </View>
 
-        <TouchableOpacity style={welcomeStyles.searchBtn} onPress={() => {}}>
+        <TouchableOpacity style={welcomeStyles.searchBtn} onPress={() => router.push(`/write-file/new`)}>
           <Image
             source={icons.plus}
             resizeMode='contain'
@@ -37,11 +56,12 @@ const FrimaFiles = () => {
         ) : error ? (
           <Text>Something went wrong</Text>
         ) : (
-          [1,2,3,4]?.map((job) => (
+          data?.map((file, i)  => (
             <FilesCard
-              job={job}
-              key={`file-${job.job_id}`}
-              handleNavigate={() => router.push(`/job-details/${job.job_id}`)}
+              fileName={file.name}
+              filaNamePath={file.path}
+              key={`file-${i}`}
+              handleNavigate={() => router.push({pathname: `/file-details/${file.name}`, params:{ path: file.path}})}
             />
           ))
         )}
@@ -50,4 +70,4 @@ const FrimaFiles = () => {
   )
 }
 
-export default FrimaFiles
+export default FilesSection

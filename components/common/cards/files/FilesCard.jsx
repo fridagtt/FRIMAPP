@@ -1,8 +1,9 @@
-import { View, Text, TouchableOpacity, Image } from "react-native";
 
+import React from 'react';
+import { View, Text, TouchableOpacity, Image } from "react-native";
 import styles from "./filesCard.style";
 
-const FilesCard = ({ file, handleNavigate }) => {
+const FilesCard = ({ fileName, handleNavigate }) => {
   return (
     <TouchableOpacity style={styles.container} onPress={handleNavigate}>
       <TouchableOpacity style={styles.logoContainer}>
@@ -17,7 +18,7 @@ const FilesCard = ({ file, handleNavigate }) => {
 
       <View style={styles.textContainer}>
         <Text style={styles.fileName} numberOfLines={1}>
-          Nombre archivo
+          {fileName}
         </Text>
       </View>
     </TouchableOpacity>

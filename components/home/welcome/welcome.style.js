@@ -8,26 +8,34 @@ const welcomeStyles = StyleSheet.create({
   },
   userName: {
     fontFamily: FONT.regular,
-    fontSize: SIZES.large,
+    fontSize: SIZES.xLarge,
     color: COLORS.secondary,
   },
   welcomeMessage: {
     fontFamily: FONT.bold,
-    fontSize: SIZES.xLarge,
+    fontSize: SIZES.large,
     color: COLORS.primary,
     marginTop: 2,
   },
-  searchContainer: {
+  codingContainer: {
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
     marginTop: SIZES.large,
-    height: 50,
+    height: '50%',
   },
-  searchWrapper: {
+  newFileContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    marginTop: SIZES.large,
+    height: 60,
+  },
+  writeWrapper: {
     flex: 1,
     backgroundColor: COLORS.white,
-    marginRight: SIZES.small,
+    marginRight: SIZES.medium,
+    marginLeft: SIZES.medium,
     justifyContent: "center",
     alignItems: "center",
     borderRadius: SIZES.medium,

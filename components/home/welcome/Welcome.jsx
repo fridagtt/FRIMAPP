@@ -21,8 +21,8 @@ const Welcome = () => {
   return (
     <View>
       <View style={welcomeStyles.container}>
-        <Text style={welcomeStyles.userName}>Hello,</Text>
-        <Text style={welcomeStyles.welcomeMessage}>Let's start using FRIMA</Text>
+        <Text style={welcomeStyles.userName}>Hola,</Text>
+        <Text style={welcomeStyles.welcomeMessage}>Escribamos código en FRIMA</Text>
       </View>
 
       {/*
