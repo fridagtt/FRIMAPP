@@ -15,13 +15,8 @@ import welcomeStyles from "../../components/home/welcome/welcome.style";
 
 const FileName = () => {
   const [text, onChangeText] = useState('Codigo');
-  const [number, onChangeNumber] = useState('');
   const params = useSearchParams();
   const router = useRouter();
-
-  /*const { data, isLoading, error, refetch } = useFetch("file-details", {
-    file_id: params.id,
-  });*/
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
@@ -43,7 +38,7 @@ const FileName = () => {
       <View style={welcomeStyles.newFileContainer}>
         <View style={welcomeStyles.writeWrapper}>
           <TextInput
-            style={welcomeStyles.searchInput}
+            style={welcomeStyles.codeInput}
             onChangeText={onChangeText}
             placeholder="Escribe aquí tu código"
             value={text}

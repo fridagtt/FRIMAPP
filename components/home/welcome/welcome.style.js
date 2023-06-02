@@ -22,7 +22,14 @@ const welcomeStyles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     marginTop: SIZES.large,
-    height: '50%',
+    height: '60%',
+  },
+  inputContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    marginTop: SIZES.large,
+    height: 50,
   },
   newFileContainer: {
     justifyContent: "center",
@@ -38,14 +45,16 @@ const welcomeStyles = StyleSheet.create({
     marginLeft: SIZES.medium,
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: SIZES.medium,
+    borderRadius: SIZES.small,
     height: "100%",
+    paddingVertical: SIZES.xSmall,
   },
-  searchInput: {
+  codeInput: {
     fontFamily: FONT.regular,
     width: "100%",
     height: "100%",
     paddingHorizontal: SIZES.medium,
+    fontSize: SIZES.medium,
   },
   searchBtn: {
     width: 50,

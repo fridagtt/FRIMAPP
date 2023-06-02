@@ -46,6 +46,8 @@ const FileDetails = () => {
   const [data, setData] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [input, setInput] = React.useState('');
+  const [output, setOutput] = React.useState('');
   const isFocused = useIsFocused();
 
   useEffect(() => {
@@ -102,10 +104,36 @@ const FileDetails = () => {
                       selectTextOnFocus={true}
                       multiline={true}
                       numberOfLines={150}
-                      style={welcomeStyles.searchInput}
+                      style={welcomeStyles.codeInput}
                       onChangeText={setData}
                       placeholder="Escribe aquí tu código"
                       value={data}
+                    />
+                  </View>
+                </View>
+                <View style={welcomeStyles.inputContainer}>
+                  <View style={welcomeStyles.writeWrapper}>
+                    <TextInput
+                      selectTextOnFocus={true}
+                      multiline={true}
+                      style={welcomeStyles.codeInput}
+                      onChangeText={setInput}
+                      placeholder="Input"
+                      value={input}
+                      keyboardType="numeric"
+                    />
+                  </View>
+                </View>
+                <View style={welcomeStyles.inputContainer}>
+                  <View style={welcomeStyles.writeWrapper}>
+                    <TextInput
+                      selectTextOnFocus={true}
+                      multiline={true}
+                      style={welcomeStyles.codeInput}
+                      onChangeText={setOutput}
+                      placeholder="Output"
+                      editable={false}
+                      value={output}
                     />
                   </View>
                 </View>

@@ -43,7 +43,7 @@ const NewFile = () => {
       <View style={welcomeStyles.codingContainer}>
         <View style={welcomeStyles.writeWrapper}>
           <TextInput
-            style={welcomeStyles.searchInput}
+            style={welcomeStyles.codeInput}
             onChangeText={onChangeText}
             placeholder="Escribe aquí tu código"
             value={text}
