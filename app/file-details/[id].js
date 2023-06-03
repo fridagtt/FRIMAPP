@@ -4,8 +4,9 @@ import {
   Text,
   TextInput,
   SafeAreaView,
-  StyleSheet,
+  ScrollView,
   ActivityIndicator,
+  TouchableOpacity
 } from "react-native";
 import {useIsFocused} from '@react-navigation/native';
 import welcomeStyles from "../../components/home/welcome/welcome.style";
@@ -15,31 +16,6 @@ import { ScreenHeaderBtn } from "../../components";
 import { COLORS, icons, SIZES } from "../../constants";
 import axios from 'axios';
 
-const styles = StyleSheet.create({
-  center: {
-    alignItems: 'center',
-  },
-  button: {
-    width: '65%',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    marginBottom: '10%',
-    marginTop: '5%',
-    backgroundColor: '#0a4daa',
-    borderRadius: 100,
-    height: 40,
-  },
-  container: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  button: {
-    margin: 10,
-    width: 100,
-  },
-});
-
 const FileDetails = () => {
   const params = useSearchParams();
   const router = useRouter();
@@ -48,6 +24,7 @@ const FileDetails = () => {
   const [error, setError] = useState(false);
   const [input, setInput] = React.useState('');
   const [output, setOutput] = React.useState('');
+  const [pendiente, setPendiente] = React.useState(false);
   const isFocused = useIsFocused();
 
   useEffect(() => {
@@ -64,6 +41,46 @@ const FileDetails = () => {
     }
     fetchData();
   }, [isFocused]);
+
+  async function deleteFile() {
+    await axios(`http://127.0.0.1:5000/deleteFile?file=${params.id}`)
+      .then(() => {
+        alert('¡Tu archivo se ha eliminado!');
+        router.back()
+      })
+      .catch(() => {
+        alert('¡Tu archivo no se ha eliminado exitosamente!');
+      });
+  }
+
+  async function saveData() {
+    await axios
+      .post('http://127.0.0.1:5000/saveFile', {
+        fileContent: data,
+        filePath: params.path,
+      })
+      .then(
+        (response) => {
+          setPendiente(true);
+        },
+        (error) => {
+          alert('Tu archivo no pudo ser guardado, intenta otra vez (:');
+        },
+      );
+  }
+
+  async function runFile() {
+    await axios(
+      `http://127.0.0.1:5000/compiler?input=${input}&path=${params.path}`,
+    )
+      .then((response) => {
+        setOutput(response.data.data.join(','))
+        setPendiente(true);
+      })
+      .catch((err) => {
+        alert(err.response.data);
+      });
+  }
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite, height: '100%' }}>
@@ -82,64 +99,126 @@ const FileDetails = () => {
           headerTitle: "",
         }}
       />
-          <View
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              alignContent: 'center',
-              width: '100%',
-              height: '100%',
-            }}
-          >
-            {isLoading ? (
-              <ActivityIndicator size='large' color={COLORS.primary} />
-            ) : error ? (
-              <Text>Something went wrong</Text>
-            ) : (
-              <>
-                <Text>{params.id}</Text>
-                <View style={welcomeStyles.codingContainer}>
-                  <View style={welcomeStyles.writeWrapper}>
-                    <TextInput
-                      selectTextOnFocus={true}
-                      multiline={true}
-                      numberOfLines={150}
-                      style={welcomeStyles.codeInput}
-                      onChangeText={setData}
-                      placeholder="Escribe aquí tu código"
-                      value={data}
-                    />
-                  </View>
+        <View style={{ flex: 1, alignItems: 'center'}}>
+          {isLoading ? (
+            <ActivityIndicator size='large' color={COLORS.primary} />
+          ) : error ? (
+            <Text>Hubo un error de nuestro lado.</Text>
+          ) : (
+            <>
+              <Text style={welcomeStyles.welcomeMessage}>{params.id}</Text>
+              <View style={[welcomeStyles.inputContainer, { height: '50%'}]}>
+                <View style={welcomeStyles.writeWrapper}>
+                  <TextInput
+                    selectTextOnFocus={true}
+                    multiline={true}
+                    numberOfLines={150}
+                    style={welcomeStyles.codeInput}
+                    onChangeText={setData}
+                    placeholder="Escribe aquí tu código"
+                    value={data}
+                  />
                 </View>
-                <View style={welcomeStyles.inputContainer}>
-                  <View style={welcomeStyles.writeWrapper}>
-                    <TextInput
-                      selectTextOnFocus={true}
-                      multiline={true}
-                      style={welcomeStyles.codeInput}
-                      onChangeText={setInput}
-                      placeholder="Input"
-                      value={input}
-                      keyboardType="numeric"
-                    />
-                  </View>
+              </View>
+              <View style={[welcomeStyles.inputContainer, { height: 50}]}>
+                <View style={welcomeStyles.writeWrapper}>
+                  <TextInput
+                    selectTextOnFocus={true}
+                    multiline={true}
+                    style={welcomeStyles.codeInput}
+                    onChangeText={setInput}
+                    placeholder="Input"
+                    value={input}
+                    keyboardType="numeric"
+                  />
                 </View>
-                <View style={welcomeStyles.inputContainer}>
-                  <View style={welcomeStyles.writeWrapper}>
-                    <TextInput
-                      selectTextOnFocus={true}
-                      multiline={true}
-                      style={welcomeStyles.codeInput}
-                      onChangeText={setOutput}
-                      placeholder="Output"
-                      editable={false}
-                      value={output}
-                    />
-                  </View>
+              </View>
+              <View style={[welcomeStyles.inputContainer, { height: 50}]}>
+                <View style={welcomeStyles.writeWrapper}>
+                  <TextInput
+                    selectTextOnFocus={true}
+                    multiline={true}
+                    style={welcomeStyles.codeInput}
+                    onChangeText={setOutput}
+                    placeholder="Resultado"
+                    editable={false}
+                    value={output}
+                  />
                 </View>
-              </>
-            )}
-          </View>
+              </View>
+              <View style={{ display: 'flex', flexDirection: 'row', marginTop: SIZES.large }}>
+                <TouchableOpacity
+                  onPress={() => saveData()}
+                  style={{
+                    backgroundColor: COLORS.gray,
+                    width: 132,
+                    padding: SIZES.xSmall,
+                    borderRadius: SIZES.small,
+                    marginRight: SIZES.medium
+                  }}
+                >
+                  <View>
+                    <Text
+                      style={{
+                        color: COLORS.white,
+                        fontWeight: 'bold',
+                        fontSize: SIZES.medium,
+                        textTransform: 'uppercase',
+                        textAlign: 'center'
+                      }}
+                    >
+                      Guardar
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => runFile()}
+                  style={{
+                    backgroundColor: COLORS.tertiary,
+                    width: 132,
+                    padding: SIZES.small,
+                    borderRadius: SIZES.small,
+                  }}
+                >
+                  <View>
+                    <Text
+                      style={{
+                        color: COLORS.white,
+                        fontWeight: 'bold',
+                        fontSize: SIZES.medium,
+                        textTransform: 'uppercase',
+                        textAlign: 'center'
+                      }}
+                    >
+                      Compilar
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+              <TouchableOpacity
+                  onPress={() => deleteFile()}
+                  style={{
+                    width: 140,
+                    padding: SIZES.small,
+                    borderRadius: SIZES.small
+                  }}
+                >
+                  <View>
+                    <Text
+                      style={{
+                        color: COLORS.error,
+                        fontWeight: 'bold',
+                        fontSize: SIZES.medium,
+                        textAlign: 'center'
+                      }}
+                    >
+                      Borrar archivo
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+            </>
+          )}
+        </View>
     </SafeAreaView>
   );
 };

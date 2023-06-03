@@ -17,19 +17,16 @@ const welcomeStyles = StyleSheet.create({
     color: COLORS.primary,
     marginTop: 2,
   },
-  codingContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-    flexDirection: "row",
-    marginTop: SIZES.large,
-    height: '60%',
+  fileName: {
+    fontSize: SIZES.xxLarge,
+    fontFamily: "DMBold",
+    color: COLORS.primary,
   },
   inputContainer: {
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
     marginTop: SIZES.large,
-    height: 50,
   },
   newFileContainer: {
     justifyContent: "center",

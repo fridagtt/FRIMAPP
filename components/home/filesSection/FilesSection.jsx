@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { useRouter } from "expo-router";
-import { View, Text, TouchableOpacity, ActivityIndicator, Image } from "react-native";
+import { View, Text, TouchableOpacity, ActivityIndicator, Image, ScrollView } from "react-native";
 import {useIsFocused} from '@react-navigation/native';
 import axios from 'axios';
 
@@ -9,7 +9,6 @@ import welcomeStyles from "../welcome/welcome.style";
 
 import { COLORS } from "../../../constants";
 import FilesCard from "../../common/cards/files/FilesCard";
-import useFetch from "../../../hook/useFetch";
 import { icons } from "../../../constants";
 
 const FilesSection = () => {
@@ -40,7 +39,6 @@ const FilesSection = () => {
         <View style={styles.headerWrapper}>
           <Text style={styles.headerTitle}>Archivos</Text>
         </View>
-
         <TouchableOpacity style={welcomeStyles.searchBtn} onPress={() => router.push(`/write-file/new`)}>
           <Image
             source={icons.plus}
@@ -49,7 +47,6 @@ const FilesSection = () => {
           />
         </TouchableOpacity>
       </View>
-
       <View style={styles.cardsContainer}>
         {isLoading ? (
           <ActivityIndicator size='large' color={COLORS.primary} />
