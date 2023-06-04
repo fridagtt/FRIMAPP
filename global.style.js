@@ -1,8 +1,8 @@
 import { StyleSheet } from "react-native";
 
-import { COLORS, FONT, SIZES } from "../../../constants";
+import { COLORS, FONT, SIZES } from "./constants";
 
-const welcomeStyles = StyleSheet.create({
+const globalStyles = StyleSheet.create({
   container: {
     width: "100%",
   },
@@ -72,4 +72,4 @@ const welcomeStyles = StyleSheet.create({
   },
 });
 
-export default welcomeStyles;
+export default globalStyles;

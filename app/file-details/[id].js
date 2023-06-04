@@ -1,19 +1,19 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
   TextInput,
   SafeAreaView,
   ActivityIndicator,
-  TouchableOpacity,
+  TouchableOpacity
 } from "react-native";
-import {useIsFocused} from '@react-navigation/native';
-import welcomeStyles from "../../components/home/welcome/welcome.style";
-
 import { Stack, useRouter, useSearchParams } from "expo-router";
+import { useIsFocused } from '@react-navigation/native';
+import axios from 'axios';
+
+import globalStyles from "../../global.style";
 import { ScreenHeaderBtn } from "../../components";
 import { COLORS, icons, SIZES } from "../../constants";
-import axios from 'axios';
 
 const FileDetails = () => {
   const params = useSearchParams();
@@ -110,26 +110,26 @@ const FileDetails = () => {
             <Text>Hubo un error de nuestro lado.</Text>
           ) : (
             <>
-              <Text style={welcomeStyles.welcomeMessage}>{params.id}</Text>
-              <View style={[welcomeStyles.inputContainer, { height: '50%'}]}>
-                <View style={welcomeStyles.writeWrapper}>
+              <Text style={globalStyles.welcomeMessage}>{params.id}</Text>
+              <View style={[globalStyles.inputContainer, { height: '50%'}]}>
+                <View style={globalStyles.writeWrapper}>
                   <TextInput
                     selectTextOnFocus={true}
                     multiline={true}
                     numberOfLines={150}
-                    style={welcomeStyles.codeInput}
+                    style={globalStyles.codeInput}
                     onChangeText={(value) => writeToFile(value)}
                     placeholder="Escribe aquí tu código"
                     value={code}
                   />
                 </View>
               </View>
-              <View style={[welcomeStyles.inputContainer, { height: 50}]}>
-                <View style={welcomeStyles.writeWrapper}>
+              <View style={[globalStyles.inputContainer, { height: 50}]}>
+                <View style={globalStyles.writeWrapper}>
                   <TextInput
                     selectTextOnFocus={true}
                     multiline={true}
-                    style={welcomeStyles.codeInput}
+                    style={globalStyles.codeInput}
                     onChangeText={setInput}
                     placeholder="Input"
                     value={input}
@@ -137,12 +137,12 @@ const FileDetails = () => {
                   />
                 </View>
               </View>
-              <View style={[welcomeStyles.inputContainer, { height: 50}]}>
-                <View style={welcomeStyles.writeWrapper}>
+              <View style={[globalStyles.inputContainer, { height: 50}]}>
+                <View style={globalStyles.writeWrapper}>
                   <TextInput
                     selectTextOnFocus={true}
                     multiline={true}
-                    style={welcomeStyles.codeInput}
+                    style={globalStyles.codeInput}
                     onChangeText={setOutput}
                     placeholder="Resultado"
                     editable={false}

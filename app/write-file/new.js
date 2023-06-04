@@ -2,29 +2,24 @@ import { useCallback, useState } from "react";
 import {
   View,
   Text,
-  Input,
   TextInput,
   SafeAreaView,
-  ScrollView,
-  ActivityIndicator,
-  RefreshControl,
   TouchableOpacity
 } from "react-native";
-import { Stack, useRouter, useSearchParams } from "expo-router";
+import { Stack, useRouter } from "expo-router";
 import { ScreenHeaderBtn } from "../../components";
 import { COLORS, icons, SIZES } from "../../constants";
-import welcomeStyles from "../../components/home/welcome/welcome.style";
+import globalStyles from "../../global.style";
 import axios from 'axios';
 
 const NewFile = () => {
   const [programName, setProgramName] = useState('');
-  const params = useSearchParams();
   const router = useRouter();
 
   async function createNewFile(fileName) {
     if(fileName) {
       await axios(`http://localhost:5000/createFile?file=${fileName}`)
-      .then((res) => {
+      .then(() => {
         alert('¡Se creó el nuevo archivo!');
         router.back();
       })
@@ -57,20 +52,20 @@ const NewFile = () => {
       <View style={{ flex: 1, margin: SIZES.medium, alignItems: 'center'}}>
         <View style={{paddingHorizontal: SIZES.medium}}>
           <Text
-            style={welcomeStyles.fileName}>
+            style={globalStyles.fileName}>
             Nuevo programa
           </Text>
         </View>
         <View
           style={[
-            welcomeStyles.inputContainer,
+            globalStyles.inputContainer,
             { height: 50, marginTop: SIZES.xxxLarge, marginBottom: SIZES.xxxLarge}
           ]}>
-          <View style={welcomeStyles.writeWrapper}>
+          <View style={globalStyles.writeWrapper}>
             <TextInput
               placeholder="Nombre del progama"
               selectTextOnFocus={true}
-              style={welcomeStyles.codeInput}
+              style={globalStyles.codeInput}
               onChangeText={setProgramName}
               value={programName}
             />

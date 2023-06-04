@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { useRouter } from "expo-router";
 
-import welcomeStyles from "./welcome.style";
+import globalStyles from "../../../global.style";
 import { icons, SIZES } from "../../../constants";
 
 const Welcome = () => {
@@ -17,9 +17,9 @@ const Welcome = () => {
 
   return (
     <View>
-      <View style={welcomeStyles.container}>
-        <Text style={welcomeStyles.userName}>Hola,</Text>
-        <Text style={welcomeStyles.welcomeMessage}>Escribamos código en FRIMA</Text>
+      <View style={globalStyles.container}>
+        <Text style={globalStyles.userName}>Hola,</Text>
+        <Text style={globalStyles.welcomeMessage}>Escribamos código en FRIMA</Text>
       </View>
     </View>
   )

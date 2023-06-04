@@ -5,7 +5,7 @@ import {useIsFocused} from '@react-navigation/native';
 import axios from 'axios';
 
 import styles from "./filesSection.style";
-import welcomeStyles from "../welcome/welcome.style";
+import globalStyles from "../../../global.style";
 
 import { COLORS } from "../../../constants";
 import FilesCard from "../../common/cards/files/FilesCard";
@@ -39,11 +39,11 @@ const FilesSection = () => {
         <View style={styles.headerWrapper}>
           <Text style={styles.headerTitle}>Archivos</Text>
         </View>
-        <TouchableOpacity style={welcomeStyles.searchBtn} onPress={() => router.push(`/write-file/new`)}>
+        <TouchableOpacity style={globalStyles.searchBtn} onPress={() => router.push(`/write-file/new`)}>
           <Image
             source={icons.plus}
             resizeMode='contain'
-            style={welcomeStyles.searchBtnImage}
+            style={globalStyles.searchBtnImage}
           />
         </TouchableOpacity>
       </View>
