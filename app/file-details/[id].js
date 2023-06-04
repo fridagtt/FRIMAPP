@@ -4,9 +4,8 @@ import {
   Text,
   TextInput,
   SafeAreaView,
-  ScrollView,
   ActivityIndicator,
-  TouchableOpacity
+  TouchableOpacity,
 } from "react-native";
 import {useIsFocused} from '@react-navigation/native';
 import welcomeStyles from "../../components/home/welcome/welcome.style";
@@ -19,19 +18,19 @@ import axios from 'axios';
 const FileDetails = () => {
   const params = useSearchParams();
   const router = useRouter();
-  const [data, setData] = useState('');
+  const [code, setCode] = useState('');
+  const [pendiente, setPendiente] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
-  const [input, setInput] = React.useState('');
-  const [output, setOutput] = React.useState('');
-  const [pendiente, setPendiente] = React.useState(false);
+  const [input, setInput] = useState('');
+  const [output, setOutput] = useState('');
   const isFocused = useIsFocused();
 
   useEffect(() => {
     async function fetchData() {
       await axios(`http://127.0.0.1:5000/readFile?path=${params.path}`)
         .then((res) => {
-          setData(res.data);
+          setCode(res.data);
           setIsLoading(false);
         })
         .catch((error) => {
@@ -56,7 +55,7 @@ const FileDetails = () => {
   async function saveData() {
     await axios
       .post('http://127.0.0.1:5000/saveFile', {
-        fileContent: data,
+        fileContent: code,
         filePath: params.path,
       })
       .then(
@@ -80,6 +79,11 @@ const FileDetails = () => {
       .catch((err) => {
         alert(err.response.data);
       });
+  }
+
+  const writeToFile = (value) => {
+    setCode(value)
+    setPendiente(false)
   }
 
   return (
@@ -114,9 +118,9 @@ const FileDetails = () => {
                     multiline={true}
                     numberOfLines={150}
                     style={welcomeStyles.codeInput}
-                    onChangeText={setData}
+                    onChangeText={(value) => writeToFile(value)}
                     placeholder="Escribe aquí tu código"
-                    value={data}
+                    value={code}
                   />
                 </View>
               </View>
@@ -146,55 +150,55 @@ const FileDetails = () => {
                   />
                 </View>
               </View>
-              <View style={{ display: 'flex', flexDirection: 'row', marginTop: SIZES.large }}>
-                <TouchableOpacity
-                  onPress={() => saveData()}
-                  style={{
-                    backgroundColor: COLORS.gray,
-                    width: 132,
-                    padding: SIZES.xSmall,
-                    borderRadius: SIZES.small,
-                    marginRight: SIZES.medium
-                  }}
-                >
-                  <View>
-                    <Text
-                      style={{
-                        color: COLORS.white,
-                        fontWeight: 'bold',
-                        fontSize: SIZES.medium,
-                        textTransform: 'uppercase',
-                        textAlign: 'center'
-                      }}
-                    >
-                      Guardar
-                    </Text>
-                  </View>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => runFile()}
-                  style={{
-                    backgroundColor: COLORS.tertiary,
-                    width: 132,
-                    padding: SIZES.small,
-                    borderRadius: SIZES.small,
-                  }}
-                >
-                  <View>
-                    <Text
-                      style={{
-                        color: COLORS.white,
-                        fontWeight: 'bold',
-                        fontSize: SIZES.medium,
-                        textTransform: 'uppercase',
-                        textAlign: 'center'
-                      }}
-                    >
-                      Compilar
-                    </Text>
-                  </View>
-                </TouchableOpacity>
-              </View>
+              <View style={{ display: 'flex', justifyContent: 'center', marginTop: SIZES.large }}>
+                { !pendiente ? ( <TouchableOpacity
+                    onPress={() => saveData()}
+                    style={{
+                      backgroundColor: COLORS.gray,
+                      width: 132,
+                      padding: SIZES.xSmall,
+                      borderRadius: SIZES.small,
+                      marginRight: SIZES.medium
+                    }}
+                  >
+                    <View>
+                      <Text
+                        style={{
+                          color: COLORS.white,
+                          fontWeight: 'bold',
+                          fontSize: SIZES.medium,
+                          textTransform: 'uppercase',
+                          textAlign: 'center'
+                        }}
+                      >
+                        Guardar
+                      </Text>
+                    </View>
+                  </TouchableOpacity> ) : (
+                  <TouchableOpacity
+                    onPress={() => runFile()}
+                    style={{
+                      backgroundColor: COLORS.tertiary,
+                      width: 132,
+                      padding: SIZES.small,
+                      borderRadius: SIZES.small,
+                    }}
+                  >
+                    <View>
+                      <Text
+                        style={{
+                          color: COLORS.white,
+                          fontWeight: 'bold',
+                          fontSize: SIZES.medium,
+                          textTransform: 'uppercase',
+                          textAlign: 'center'
+                        }}
+                      >
+                        Compilar
+                      </Text>
+                    </View>
+                  </TouchableOpacity>)
+                }
               <TouchableOpacity
                   onPress={() => deleteFile()}
                   style={{
@@ -216,6 +220,7 @@ const FileDetails = () => {
                     </Text>
                   </View>
                 </TouchableOpacity>
+              </View>
             </>
           )}
         </View>
