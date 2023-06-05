@@ -150,7 +150,7 @@ const FileDetails = () => {
                   />
                 </View>
               </View>
-              <View style={{ display: 'flex', justifyContent: 'center', marginTop: SIZES.large }}>
+              <View style={{ display: 'flex', alignItems: 'center', marginTop: SIZES.large }}>
                 { !pendiente ? ( <TouchableOpacity
                     onPress={() => saveData()}
                     style={{
@@ -158,7 +158,6 @@ const FileDetails = () => {
                       width: 132,
                       padding: SIZES.xSmall,
                       borderRadius: SIZES.small,
-                      marginRight: SIZES.medium
                     }}
                   >
                     <View>
@@ -180,7 +179,7 @@ const FileDetails = () => {
                     style={{
                       backgroundColor: COLORS.tertiary,
                       width: 132,
-                      padding: SIZES.small,
+                      padding: SIZES.xSmall,
                       borderRadius: SIZES.small,
                     }}
                   >
